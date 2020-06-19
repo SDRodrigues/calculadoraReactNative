@@ -12,19 +12,19 @@ let estadoInicial = {
 }
 
   export default class App extends React.Component {
-    state = { ...estadoInicial }
+    state = { ...estadoInicial };
 
     seleciona = (valor: string) => {
-      const limpartTela = this.state.valorNaTela === '0' || this.state.limpaTela;
+      let limpartTela = this.state.valorNaTela === '0' || this.state.limpaTela;
       if (valor === '.' && !limpartTela && this.state.valorNaTela.includes('.')) {
         return;
       }
-      const valorAtual = limpartTela ? '' : this.state.valorNaTela;
-      const valorNaTela = valorAtual + valor;
+      let valorAtual = limpartTela ? '' : this.state.valorNaTela;
+      let valorNaTela = valorAtual + valor;
       this.setState({ valorNaTela: valorNaTela, limpaTela: false });
       if (valor !== '.') {
-        const novoValor = parseFloat(valorNaTela);
-        const valores = [...this.state.valores];
+        let novoValor = parseFloat(valorNaTela);
+        let valores = [...this.state.valores];
         valores[this.state.valorAtual] = novoValor;
         this.setState({ valores: valores });
       }
@@ -38,20 +38,20 @@ let estadoInicial = {
       if (this.state.valorAtual === 0) {
         this.setState({ operacao: operador, valorAtual: 1, limpaTela: true });
       } else {
-        const equals = operador === '=';
-        const values = [...this.state.valores];
+        let igual = operador === '=';
+        let valores = [...this.state.valores];
         try {
-          values[0] = eval(`${values[0]} ${this.state.operacao} ${values[1]}`);
+          valores[0] = eval(`${valores[0]} ${this.state.operacao} ${valores[1]}`);
         } catch (e) {
-          values[0] = this.state.valores[0];
+          valores[0] = this.state.valores[0];
         }
-        values[1] = 0;
+        valores[1] = 0;
         this.setState({
-          valorNaTela: `${values[0]}`,
-          operacao: equals ? null : operador,
-          valorAtual: equals ? 0 : 1,
+          valorNaTela: `${valores[0]}`,
+          operacao: igual ? null : operador,
+          valorAtual: igual ? 0 : 1,
           limpaTela: true,
-          values,
+          values: valores,
         })
       }
     }
@@ -61,30 +61,30 @@ let estadoInicial = {
         <View style={styles.container}>
           <Display valor={this.state.valorNaTela} />
           <View style={styles.botoes}>
-            <Botao campo='AC'  onClick={this.limpar} />
-            <Botao campo='/'  onClick={this.operacao} />
             <Botao campo='7' onClick={this.seleciona} />
             <Botao campo='8' onClick={this.seleciona} />
             <Botao campo='9' onClick={this.seleciona} />
-            <Botao campo='*'   onClick={this.operacao} />
+            <Botao campo='AC' onClick={this.limpar} />
             <Botao campo='4' onClick={this.seleciona} />
             <Botao campo='5' onClick={this.seleciona} />
             <Botao campo='6' onClick={this.seleciona} />
-            <Botao campo='-'  onClick={this.operacao} />
+            <Botao campo='/' onClick={this.operacao} />
             <Botao campo='1' onClick={this.seleciona} />
             <Botao campo='2' onClick={this.seleciona} />
             <Botao campo='3' onClick={this.seleciona} />
-            <Botao campo='+'  onClick={this.operacao} />
-            <Botao campo='0'   onClick={this.seleciona} />
+            <Botao campo='*' onClick={this.operacao} />
+            <Botao campo='0' onClick={this.seleciona} />
             <Botao campo='.' onClick={this.seleciona} />
-            <Botao campo='='  onClick={this.operacao} />
+            <Botao campo='-' onClick={this.operacao} />
+            <Botao campo='=' onClick={this.operacao} />
+            <Botao campo='+' onClick={this.operacao} />
           </View>
         </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
   },
